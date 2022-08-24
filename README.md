@@ -1,6 +1,8 @@
 # vitess-playground
 Let's try Vitess by using it to scale an ecommerce app's database!
 
+[![Ruby](https://github.com/mtantawy/vitess-playground/actions/workflows/ruby.yml/badge.svg)](https://github.com/mtantawy/vitess-playground/actions/workflows/ruby.yml)
+
 ## Plan
 1. Build a simple headless ecommerce app
     * No authentication
