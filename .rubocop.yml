@@ -1,0 +1,6 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+require:
+  - rubocop-rails
+AllCops:
+    NewCops: enable
