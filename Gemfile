@@ -49,7 +49,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'mocha'
+  gem "mocha"
 end
 
 group :development do
