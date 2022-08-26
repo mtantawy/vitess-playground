@@ -8,7 +8,14 @@ class Product < ApplicationRecord
         description: Faker::Lorem.sentence(random_words_to_add: 5),
         quantity: rand(1000)
       )
-      product.save!
+
+      begin
+        product.save!
+      rescue ActiveRecord::RecordNotUnique
+        product.name = Faker::Commerce.product_name
+        retry
+      end
+
       product
     end
   end

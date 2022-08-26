@@ -98,6 +98,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.16.3)
+    mocha (1.14.0)
     msgpack (1.5.6)
     net-imap (0.2.3)
       digest
@@ -203,6 +204,7 @@ DEPENDENCIES
   bootsnap
   debug
   faker
+  mocha
   pry-byebug
   pry-rails
   puma (~> 5.0)
