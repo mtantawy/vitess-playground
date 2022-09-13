@@ -41,3 +41,16 @@ In reality, Vitess is much more than a "proxy", this was an oversimplification t
 In reality Vitess does a lot more like handling failovers, backups, replication, online schema changes (think gh-ost), even going as far as understanding availability zones or data centers to understand the topology of the underlying databases.
 
 Read more at [vitess.io](https://vitess.io/)
+
+
+## Updates/Changelog/Decision log
+
+This section is going to be an append-only log of anything worthy documenting, like decisions, changes, or updates on progress
+
+### 13.09.2022: Write the scenarios as `jobs` so they could be triggered `async` as application jobs or `sync` through controllers
+I was initially going to make the component stress-loading the application to be async jobs running through rails, but then thought that it'd be slow and re-inventing the wheel vs using existing tools that can be configured to shoot http requests to the application.
+
+The second decision is to make the actual code of a `scenario` in a `job` so that it could be re-used, basically allowing testing it as a job without having to call a controller or make an http request, this also allows me to setup rails jobs as a first step before setting up proper `loaders` that shoot http requests.
+
+### 13.09.2022: Push metrics directly to `influxdb` instead of `telegraf` then `influxdb` for simplicity
+I basically found this tutorial https://www.influxdata.com/blog/monitoring-ruby-on-rails-with-influxdb/ and a seemingly well-maintained gem https://github.com/influxdata/influxdb-client-ruby, so for the sake of simplicity I am going to follow that until there is a reason to push to `telegraf` at which point I will probably use https://github.com/jgraichen/telegraf-ruby .
