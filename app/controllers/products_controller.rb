@@ -2,7 +2,7 @@
 
 class ProductsController < ApplicationController
   def create
-    render(json: Product.create)
+    render(json: CreateProductJob.perform_now)
   end
 
   def update
