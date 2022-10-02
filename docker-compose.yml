@@ -1,0 +1,19 @@
+# src https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose
+
+version: "3.0"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+    environment:
+      RAILS_ENV: production
+
+volumes:
+  gem_cache:
