@@ -8,12 +8,16 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      # allow `scale` command using `docker-compose up scale app=num`
+      - "3000-3010:3000"
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
     environment:
       RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "enabled"
+      # allow multiple instances to run by placing the server.pid out of the working dir
+      PIDFILE: /tmp/server.pid
 
 volumes:
   gem_cache:
