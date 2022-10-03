@@ -6,7 +6,7 @@ class Product < ApplicationRecord
       product = new(
         name: Faker::Commerce.product_name,
         description: Faker::Lorem.sentence(random_words_to_add: 5),
-        quantity: rand(1000)
+        quantity: rand(1000),
       )
 
       begin
