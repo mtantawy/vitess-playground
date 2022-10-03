@@ -32,6 +32,17 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: vitess_playground
 
+  # this works as a loadbalancer BUT it doesn't update containers list when re-scaling
+  # so always `up` with the correct `scale` count of `app` containers
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    ports:
+      - "8080:8080"
+
 volumes:
   gem_cache:
   db_data:
