@@ -10,7 +10,7 @@ services:
     depends_on:
       - database
     ports:
-      # allow `scale` command using `docker-compose up scale app=num`
+      # allow `scale` command using `docker-compose up scale app=num` up to 10
       - "3000-3010:3000"
     volumes:
       - .:/app
@@ -24,9 +24,8 @@ services:
 
   database:
     image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
