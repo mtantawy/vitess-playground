@@ -4,7 +4,7 @@ class Product < ApplicationRecord
   class << self
     def create
       product = new(
-        name: Faker::Commerce.product_name,
+        name: create_product_name,
         description: Faker::Lorem.sentence(random_words_to_add: 5),
         quantity: rand(1000),
       )
@@ -12,11 +12,17 @@ class Product < ApplicationRecord
       begin
         product.save!
       rescue ActiveRecord::RecordNotUnique
-        product.name = Faker::Commerce.product_name
+        product.name = create_product_name
         retry
       end
 
       product
+    end
+
+    private
+
+    def create_product_name
+      "#{Faker::Commerce.product_name} #{rand(1000)}"
     end
   end
 end

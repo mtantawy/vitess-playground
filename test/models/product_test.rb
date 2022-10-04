@@ -13,9 +13,9 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "Product.create retries on ActiveRecord::RecordNotUnique Error" do
-    # mock Faker::Commerce.product_name
+    # mock Product.create_product_name which uses Faker::Commerce.product_name
     # make it return same name twice, then different name on 3rd try
-    Faker::Commerce.stubs(:product_name).returns("Steam Deck", "Steam Deck", "Steam Deck 2")
+    Product.stubs(:create_product_name).returns("Steam Deck", "Steam Deck", "Steam Deck 2")
 
     # create product with the same name mocked earlier
     product1 = Product.create!(name: "Steam Deck")
