@@ -1,6 +1,6 @@
 # src https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose
 
-version: "3.0"
+version: "3.9"
 
 services:
   app:
@@ -30,6 +30,28 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: vitess_playground
+    healthcheck:
+      test: ["CMD", "mysql", "-e show databases"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+    command: bin/rails db:prepare
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "enabled"
+      # allow multiple instances to run by placing the server.pid out of the working dir
+      PIDFILE: /tmp/server.pid
 
   # this works as a loadbalancer BUT it doesn't update containers list when re-scaling
   # so always `up` with the correct `scale` count of `app` containers
