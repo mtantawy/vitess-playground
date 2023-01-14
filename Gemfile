@@ -61,6 +61,5 @@ group :development do
 
   gem "rubocop-shopify", require: false
   gem "rubocop-rails", require: false
+  gem "ruby-lsp", "~> 0.3.7"
 end
-
-gem "ruby-lsp", "~> 0.3.7", :group => :development
