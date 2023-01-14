@@ -88,6 +88,7 @@ GEM
     irb (1.4.1)
       reline (>= 0.3.0)
     json (2.6.2)
+    language_server-protocol (3.17.0.2)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -114,6 +115,7 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
+    prettier_print (1.2.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -178,8 +180,15 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     rubocop-shopify (2.10.1)
       rubocop (~> 1.35)
+    ruby-lsp (0.3.7)
+      language_server-protocol (~> 3.17.0)
+      sorbet-runtime
+      syntax_tree (>= 4.0.2, < 5.0.0)
     ruby-progressbar (1.11.0)
+    sorbet-runtime (0.5.10626)
     sqlite3 (1.5.2-x86_64-linux)
+    syntax_tree (4.3.0)
+      prettier_print (>= 1.0.2)
     thor (1.2.1)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -205,6 +214,7 @@ DEPENDENCIES
   rails (~> 7.0.4)
   rubocop-rails
   rubocop-shopify
+  ruby-lsp (~> 0.3.7)
   sqlite3 (~> 1.4)
   tzinfo-data
 
