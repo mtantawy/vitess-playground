@@ -12,12 +12,13 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_08_26_211412) do
   create_table "products", force: :cascade do |t|
+    t.string "sku"
     t.string "name"
     t.text "description"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_products_on_name", unique: true
+    t.index ["sku"], name: "index_products_on_sku", unique: true
   end
 
 end
