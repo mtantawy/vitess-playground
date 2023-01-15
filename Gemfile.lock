@@ -85,6 +85,7 @@ GEM
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    influxdb-client (2.9.0)
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
@@ -213,6 +214,7 @@ DEPENDENCIES
   bootsnap
   debug
   faker
+  influxdb-client (~> 2.9)
   mocha
   mysql2 (~> 0.5)
   pry-byebug
