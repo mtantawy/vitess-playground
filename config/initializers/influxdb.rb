@@ -52,3 +52,19 @@ ActiveSupport::Notifications.subscribe("sql.active_record") do |_name, started, 
 
   write_api.write(data: hash)
 end if Rails.env.production? # TODO: get rid of the redundant check
+
+ActiveSupport::Notifications.subscribe("perform.active_job") do |_name, started, finished, _id, data|
+  hash = {
+    name: "perform.active_job",
+    tags: {
+      job: data[:job],
+      time_in_db: (data[:db_runtime] || 0).ceil, # in ms
+    },
+    fields: {
+      duration: (finished - started) * 1000, # in ms
+    },
+    time: started,
+  }
+
+  write_api.write(data: hash)
+end if Rails.env.production? # TODO: get rid of the redundant check
