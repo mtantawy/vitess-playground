@@ -34,3 +34,6 @@
 
 # Docker Compose env file
 .env
+
+# Code Coverage by SimpleCov
+coverage
