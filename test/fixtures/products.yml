@@ -1,11 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   name: MyString
-#   description: MyText
-#   quantity: 1
+one:
+  id: 1
+  sku: HEDTHHEDH259QOLT
+  name: ProductNumberOne
+  description: "I am product number One"
+  quantity: 5
 
-# two:
-#   name: MyString
-#   description: MyText
-#   quantity: 1
+two:
+  id: 2
+  sku: 3TKNKDEWNYENF53Y
+  name: ProductNumberTwo
+  description: "I am product number Two"
+  quantity: 10
+
+two:
+  id: 3
+  sku: TLCFGB6LXNNONLKQ
+  name: ProductNumberThree
+  description: "I am product number Three"
+  quantity: 15
