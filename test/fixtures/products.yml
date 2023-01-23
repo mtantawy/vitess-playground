@@ -14,7 +14,7 @@ two:
   description: "I am product number Two"
   quantity: 10
 
-two:
+three:
   id: 3
   sku: TLCFGB6LXNNONLKQ
   name: ProductNumberThree
