@@ -6,6 +6,11 @@ class ProductsController < ApplicationController
   end
 
   def update
+    render(json: UpdateRandomProductJob.perform_now)
+  end
+
+  def find
+    render(json: FindRandomProductJob.perform_now)
   end
 
   def delete
