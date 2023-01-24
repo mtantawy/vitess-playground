@@ -47,6 +47,13 @@ Read more at [vitess.io](https://vitess.io/)
 
 This section is going to be an append-only log of anything worthy documenting, like decisions, changes, or updates on progress
 
+### 24.01.2023: This is not an update, but rather an issue that I waste a lot of time on whenever it occurs
+When updating one of the dependencies, I probably need to purge Bootsnap's cache, otherwise the app doesn't run in docker even if it runs out of docker correctly, errors are usually about failing to load a file or a dependency.
+
+> Note also that bootsnap will never clean up its own cache: this is left up to you. Depending on your deployment strategy, you may need to periodically purge tmp/cache/bootsnap*. If you notice deploys getting progressively slower, this is almost certainly the cause.
+
+From https://github.com/Shopify/bootsnap/#usage
+
 ### 13.09.2022: Write the scenarios as `jobs` so they could be triggered `async` as application jobs or `sync` through controllers
 I was initially going to make the component stress-loading the application to be async jobs running through rails, but then thought that it'd be slow and re-inventing the wheel vs using existing tools that can be configured to shoot http requests to the application.
 
