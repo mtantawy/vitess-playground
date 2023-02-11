@@ -11,15 +11,27 @@ class Product < ApplicationRecord
         quantity: generate_quantity,
       )
 
-      begin
-        product.save!
-      rescue ActiveRecord::RecordNotUnique
-        # TODO: push a metric here to track retries
-        product.sku = generate_sku
-        retry
-      end
+      product.retryable_save
 
       product
     end
+
+    def update(product)
+      product.name = generate_name
+      product.description = generate_description
+      product.quantity = generate_quantity
+
+      product.retryable_save
+
+      product
+    end
+  end
+
+  def retryable_save
+    save!
+  rescue ActiveRecord::RecordNotUnique
+    # TODO: push a metric here to track retries
+    self.sku = Product.generate_sku
+    retry
   end
 end

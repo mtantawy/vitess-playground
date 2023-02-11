@@ -14,5 +14,6 @@ class ProductsController < ApplicationController
   end
 
   def delete
+    # to be implemented when soft-delete is added
   end
 end

@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+class Customer < ApplicationRecord
+  include CustomerAttributeValuesGenerator
+
+  class << self
+    def create
+      customer = new(
+        name: generate_name,
+        email: generate_email,
+      )
+
+      customer.retryable_save
+
+      customer
+    end
+
+    def update(customer)
+      customer.name = generate_name
+      customer.email = generate_email
+
+      customer.retryable_save
+
+      customer
+    end
+  end
+
+  def retryable_save
+    save!
+  rescue ActiveRecord::RecordNotUnique
+    # TODO: push a metric here to track retries
+    self.email = Customer.generate_email
+    retry
+  end
+end
