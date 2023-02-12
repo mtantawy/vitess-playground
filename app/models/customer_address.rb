@@ -3,13 +3,24 @@
 class CustomerAddress < ApplicationRecord
   include CustomerAddressAttributeValuesGenerator
 
-  belongs_to :customer, inverse_of: :addresses
   enum :kind, shipping: "shipping", billing: "billing"
+
+  belongs_to :customer, inverse_of: :addresses
+  has_many :orders_as_billing_address,
+    class_name: "Order",
+    dependent: :destroy,
+    foreign_key: :billing_address_id,
+    inverse_of: :billing_address
+  has_many :orders_as_shipping_address,
+    class_name: "Order",
+    dependent: :destroy,
+    foreign_key: :shipping_address_id,
+    inverse_of: :shipping_address
 
   class << self
     def create
       address = new(
-        kind: [:shipping, :billing].sample,
+        kind: kinds.values.sample,
         default: [true, false].sample,
         street: generate_street,
         postcode: generate_postcode,
@@ -25,7 +36,7 @@ class CustomerAddress < ApplicationRecord
 
     def update(address)
       address.update(
-        kind: [:shipping, :billing].sample,
+        kind: kinds.values.sample,
         default: [true, false].sample,
         street: generate_street,
         postcode: generate_postcode,

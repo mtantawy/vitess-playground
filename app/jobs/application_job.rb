@@ -11,5 +11,5 @@ class ApplicationJob < ActiveJob::Base
   # TODO: find a better place for this
   # Tried to place it in ApplicationRecord but it is not possible because the constants were not initialized yet
   # another solution could be "name".constantize
-  MODELS = [Product, Customer, CustomerAddress]
+  MODELS = [Product, Customer, CustomerAddress, Order, OrderItem]
 end
