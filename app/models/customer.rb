@@ -3,6 +3,7 @@
 class Customer < ApplicationRecord
   include CustomerAttributeValuesGenerator
 
+  has_many :addresses, class_name: "CustomerAddress", dependent: :destroy
   class << self
     def create
       customer = new(

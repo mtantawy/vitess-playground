@@ -2,7 +2,7 @@
 
 class CreateJob; end
 
-[Product, Customer].each do |model|
+ApplicationJob::MODELS.each do |model|
   Object.const_set("Create#{model}Job", Class.new(ApplicationJob) do
     queue_as :default
 

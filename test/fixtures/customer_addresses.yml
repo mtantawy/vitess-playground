@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  kind: Shipping
+  default: false
+  street: MyString
+  postcode: MyString
+  city: MyString
+  country: MyString
+  customer_id: 1
+
+two:
+  id: 2
+  kind: Billing
+  default: true
+  street: MyString
+  postcode: MyString
+  city: MyString
+  country: MyString
+  customer_id: 2

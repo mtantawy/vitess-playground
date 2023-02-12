@@ -2,7 +2,7 @@
 
 class FindRandomJob; end
 
-[Product, Customer].each do |model|
+ApplicationJob::MODELS.each do |model|
   Object.const_set("FindRandom#{model}Job", Class.new(ApplicationJob) do
     queue_as :default
 

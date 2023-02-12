@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_11_200921) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_12_132842) do
+  create_table "customer_addresses", force: :cascade do |t|
+    t.string "kind", null: false
+    t.boolean "default", default: false, null: false
+    t.string "street"
+    t.string "postcode"
+    t.string "city"
+    t.string "country"
+    t.integer "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_customer_addresses_on_customer_id"
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -29,4 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_200921) do
     t.index ["sku"], name: "index_products_on_sku", unique: true
   end
 
+  add_foreign_key "customer_addresses", "customers"
 end
