@@ -17,9 +17,11 @@ class Product < ApplicationRecord
     end
 
     def update(product)
-      product.name = generate_name
-      product.description = generate_description
-      product.quantity = generate_quantity
+      product.update(
+        name: generate_name,
+        description: generate_description,
+        quantity: generate_quantity,
+      )
 
       product.retryable_save
 

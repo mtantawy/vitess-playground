@@ -16,8 +16,10 @@ class Customer < ApplicationRecord
     end
 
     def update(customer)
-      customer.name = generate_name
-      customer.email = generate_email
+      customer.update(
+        name: generate_name,
+        email: generate_email,
+      )
 
       customer.retryable_save
 
