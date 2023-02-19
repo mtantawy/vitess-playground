@@ -47,6 +47,54 @@ Read more at [vitess.io](https://vitess.io/)
 
 This section is going to be an append-only log of anything worthy documenting, like decisions, changes, or updates on progress
 
+### 19.02.2023: Simple benchmarking for various cheap VPS providers to determine which to run the app on
+Using the cheapest VPS available run a benchmark/stress-test using `ab` at 10K request with concurrency set to 3 to the `products/find` endpoint and observe the behaviour, specifically, how long does it take? what's the rate of requests? and whether the rate is smooth/consistent or fluctuates highly
+
+Command: `ab -n 10000 -c 3 -l -m GET localhost:8080/products/find`
+
+`-l` to ignore response size, otherwise different response sizes make `ab` report request to be a failure
+
+**Digital Ocean**
+
+Started with Digital Ocean because it is what I personally have been using for years and have familiarity with.
+
+While setting up a VPS is smooth, the performance is not consistent, most probably due to shared-CPU and throttling, which is expected because shared-CPU VPS is not intended to sustain high performance/load, but rather low to medium load with non-persistent spikes of high load.
+
+This is how it looked:![image](https://user-images.githubusercontent.com/244932/219951368-64b23ac2-c59f-42a3-9368-5f99d454c636.png)
+
+**Linode**
+
+Setup is smooth, VPS of same specs is like a dollar cheap.
+
+Performace is worse though, had to increase `ab` timeout to 120 seconds.
+
+This is how it looked:![image](https://user-images.githubusercontent.com/244932/219951810-3e4d545c-5583-4bb0-95e7-f46dbd5e3072.png)
+
+**Hetzner**
+
+Setup is okay, VPS os same specs is slightly cheaper too.
+
+Performace is better as in, no throttling *observed*, rate of requests was lower but sustainable with makes more sense for this app to exclude external factors when observing the app and DB performance.
+
+Here is how it looked:![image](https://user-images.githubusercontent.com/244932/219952038-d351860d-758e-4ac4-b676-1d760906727e.png)
+
+**Binary Racks**
+
+Setup is okay, while they don't offer all bells and whistles you'd expect, they're much cheaper.
+
+Performance is much better, no throttling *observed* as well, rate of requests was proportionally good and rate of requests was stable
+
+Using a 2-CPU VPS I was able to run 3 app containers, and benchmark at 100K requests with 15 concurrent requests and get very good results
+
+This is how it looked:![image](https://user-images.githubusercontent.com/244932/219952203-161258ca-1045-4cf2-aedb-93abaa9ce399.png)
+
+**Conclusion**
+
+It appears that less-known providers are able to provide more stable CPU power without much throttling probably due to not being super popular and having lots of users competing on resources, also cheaper so one can get more value-for-money.
+
+As it stands, I'll most probably use a mix of Hetzner and Binary Racks, will report back if observed performance changes.
+
+
 ### 02.02.2023: How to run the app and its dependencies on 1 machine, from scratch
 This is how the setup should look like, ignoring the server specs
 ![image](https://user-images.githubusercontent.com/244932/216458030-25544604-7874-47af-9694-330e51b0a840.png)
