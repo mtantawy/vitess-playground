@@ -15,9 +15,9 @@ write_options = InfluxDB2::WriteOptions.new(
 write_api = client.create_write_api(write_options: write_options)
 
 # TODO: move subscribers somewhere else
-ActiveSupport::Notifications.subscribe("process_action.action_controller") do |_name, started, finished, _id, data|
+ActiveSupport::Notifications.subscribe("process_action.action_controller") do |name, started, finished, _id, data|
   hash = {
-    name: "process_action.action_controller",
+    name: name,
     tags: {
       method: "#{data[:controller]}##{data[:action]}",
       format: data[:format],
@@ -36,9 +36,9 @@ ActiveSupport::Notifications.subscribe("process_action.action_controller") do |_
   write_api.write(data: hash)
 end if Rails.env.production? # TODO: get rid of the redundant check
 
-ActiveSupport::Notifications.subscribe("sql.active_record") do |_name, started, finished, _id, data|
+ActiveSupport::Notifications.subscribe("sql.active_record") do |name, started, finished, _id, data|
   hash = {
-    name: "sql.active_record",
+    name: name,
     tags: {
       name: data[:name],
       statement_name: data[:statement_name],
@@ -53,11 +53,11 @@ ActiveSupport::Notifications.subscribe("sql.active_record") do |_name, started, 
   write_api.write(data: hash)
 end if Rails.env.production? # TODO: get rid of the redundant check
 
-ActiveSupport::Notifications.subscribe("perform.active_job") do |_name, started, finished, _id, data|
+ActiveSupport::Notifications.subscribe("perform.active_job") do |name, started, finished, _id, data|
   hash = {
-    name: "perform.active_job",
+    name: name,
     tags: {
-      job: data[:job],
+      job: data[:job].class.to_s,
       time_in_db: (data[:db_runtime] || 0).ceil, # in ms
     },
     fields: {
