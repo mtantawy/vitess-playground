@@ -7,16 +7,7 @@ ApplicationJob::MODELS.each do |model|
     queue_as :default
 
     define_method :perform do |*_args|
-      record = find_random_record
-      model.update(record)
+      model.update("FindRandom#{model}Job".constantize.perform_now)
     end
-
-    define_method :find_random_record do
-      # TODO: push a metric here to track retries
-      record = "FindRandom#{model}Job".constantize.perform_now until record.is_a?(model)
-      record
-    end
-
-    private :find_random_record
   end)
 end
