@@ -14,10 +14,4 @@ class UpdateRandomProductJobTest < ActiveJob::TestCase
     assert_equal "I am an updated description", updated_product.description
     assert_equal 100, updated_product.quantity
   end
-
-  test "UpdateRandomProductJob retries finding Product until one is found" do
-    FindRandomProductJob.expects(:perform_now).returns(nil, products(:one)).twice
-    updated_product = UpdateRandomProductJob.perform_now
-    assert_predicate updated_product, :persisted?
-  end
 end

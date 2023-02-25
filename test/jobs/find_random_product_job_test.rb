@@ -9,10 +9,9 @@ class FindRandomProductJobTest < ActiveJob::TestCase
   end
 
   test "FindRandomProductJob returns a nil when product with random id is not found" do
-    Product.stubs(:minimum).returns(100)
-    Product.stubs(:maximum).returns(101)
+    Product.stubs(:find_by).returns(nil, products(:one)).twice
 
     random_product = FindRandomProductJob.perform_now
-    assert_predicate random_product, :nil?
+    assert random_product.is_a?(Product)
   end
 end
