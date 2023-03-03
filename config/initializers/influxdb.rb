@@ -58,10 +58,10 @@ ActiveSupport::Notifications.subscribe("perform.active_job") do |name, started, 
     name: name,
     tags: {
       job: data[:job].class.to_s,
-      time_in_db: (data[:db_runtime] || 0).ceil, # in ms
     },
     fields: {
       duration: (finished - started) * 1000, # in ms
+      time_in_db: (data[:db_runtime] || 0).ceil, # in ms
     },
     time: started,
   }
