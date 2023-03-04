@@ -12,7 +12,7 @@ module CustomerAttributeValuesGenerator
     end
 
     def generate_email
-      Faker::Internet.safe_email
+      Faker::Internet.safe_email(name: 20)
     end
   end
 end
