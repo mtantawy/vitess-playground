@@ -50,7 +50,7 @@ This section is going to be an append-only log of anything worthy documenting, l
 ### 12.03.2023: Background jobs are now supported using Sidekiq and Redis
 [Sidekiq](https://github.com/sidekiq/sidekiq) is now enabled and Redis has been added, this allows running jobs in the background using a proper queue adapter instead of the `async` adapter.
 
-`worker` container has also been added which uses the same concurrency of 5, and the container can be scaled up just like the a`pp` container, example: `--scale worker=X --scale app=Y` (X, Y up to 10 due to configured port range)
+`worker` container has also been added which uses the same concurrency of 5 (read from `RAILS_MAX_THREADS`, `config/puma.rb`), and the container can be scaled up just like the `app` container, example: `docker compose up --scale worker=X --scale app=Y` (X, Y up to 10 due to configured port range)
 
 Also now that we're using `rails` main branch we have access to the `perform_all_later` method that helps bulk enqueue jobs at once, example: `ActiveJob.perform_all_later(10.times.map { CreateProductJob.new })`
 
