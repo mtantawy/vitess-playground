@@ -183,6 +183,8 @@ GEM
       loofah (~> 2.19, >= 2.19.1)
     rainbow (3.1.1)
     rake (13.0.6)
+    redis-client (0.14.0)
+      connection_pool
     regexp_parser (2.7.0)
     reline (0.3.2)
       io-console (~> 0.5)
@@ -211,6 +213,11 @@ GEM
       syntax_tree (>= 6, < 7)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    sidekiq (7.0.6)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -249,6 +256,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-shopify
   ruby-lsp
+  sidekiq (~> 7.0)
   simplecov
   sqlite3 (~> 1.4)
   tzinfo-data

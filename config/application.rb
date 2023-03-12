@@ -27,6 +27,6 @@ module VitessPlayground
     config.api_only = true
 
     # queuing backend
-    config.active_job.queue_adapter = :async
+    config.active_job.queue_adapter = :sidekiq
   end
 end

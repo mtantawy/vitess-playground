@@ -3,12 +3,13 @@
 version: "3.9"
 
 services:
-  app:
+  app: &app
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - database
+      - redis
     ports:
       # allow `scale` command using `docker-compose up --scale app=num` up to 10
       - "3000-3010:3000"
@@ -22,6 +23,7 @@ services:
       # allow multiple instances to run by placing the server.pid out of the working dir
       PIDFILE: /tmp/server.pid
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+      REDIS_URL: redis://redis
 
   database:
     image: mysql
@@ -55,6 +57,12 @@ services:
       PIDFILE: /tmp/server.pid
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
 
+  worker:
+      <<: *app
+      ports:
+      - "2989-2999:3000"
+      command: [ "bundle", "exec", "sidekiq" ]
+
   # this works as a loadbalancer BUT it doesn't update containers list when re-scaling
   # so always `up` with the correct `scale` count of `app` containers
   nginx:
@@ -78,6 +86,9 @@ services:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
     environment:
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+
+  redis:
+    image: redis
 
 volumes:
   gem_cache:
