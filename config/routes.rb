@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     get "#{model}/find"
     post "#{model}/delete"
   end
+
+  post "noop", to: "no_op#run"
 end
