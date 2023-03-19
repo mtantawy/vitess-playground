@@ -89,6 +89,7 @@ services:
 
   redis:
     image: redis
+    restart: always
 
 volumes:
   gem_cache:
